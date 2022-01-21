@@ -3,7 +3,8 @@
 ## Homework-1
 
 - Add a UIToolBar ✅
-- Add navigation buttons (left, right) to cycle through alternative routes ✅
+- When 'Draw route' button is tapped, show all the possible routes to the user in real time ✅
+- Cycle through alternative routes using (left and right) buttons ✅
 
 ## Homework-2
 
