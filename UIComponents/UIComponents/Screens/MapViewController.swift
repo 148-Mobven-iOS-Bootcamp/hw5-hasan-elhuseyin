@@ -9,36 +9,40 @@ import UIKit
 import MapKit
 
 class MapViewController: UIViewController {
-
+    
+    //MARK: - IBOutles
     @IBOutlet weak var mapView: MKMapView!
-
+    
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         checkLocationPermission()
         addLongGestureRecognizer()
     }
-
+    
+    //MARK: - Variables
     private var currentCoordinate: CLLocationCoordinate2D?
     private var destinationCoordinate: CLLocationCoordinate2D?
-
+    
+    //MARK: - Functions
     func addLongGestureRecognizer() {
         let longPressGesture = UILongPressGestureRecognizer(target: self,
                                                             action: #selector(handleLongPressGesture(_ :)))
         self.view.addGestureRecognizer(longPressGesture)
     }
-
+    
     @objc func handleLongPressGesture(_ sender: UILongPressGestureRecognizer) {
         let point = sender.location(in: mapView)
         let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
         destinationCoordinate = coordinate
-
+        
         let annotation = MKPointAnnotation()
         annotation.coordinate = coordinate
         annotation.title = "Pinned"
         mapView.addAnnotation(annotation)
     }
-
+    
     func checkLocationPermission() {
         switch self.locationManager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse, .authorized:
@@ -53,33 +57,35 @@ class MapViewController: UIViewController {
             fatalError()
         }
     }
-
+    
+    
+    //MARK: - IBActions
     @IBAction func showCurrentLocationTapped(_ sender: UIButton) {
         locationManager.requestLocation()
     }
-
+    
     @IBAction func drawRouteButtonTapped(_ sender: UIButton) {
         guard let currentCoordinate = currentCoordinate,
               let destinationCoordinate = destinationCoordinate else {
                   // log
                   // alert
-            return
-        }
-
+                  return
+              }
+        
         let sourcePlacemark = MKPlacemark(coordinate: currentCoordinate)
         let source = MKMapItem(placemark: sourcePlacemark)
-
+        
         let destinationPlacemark = MKPlacemark(coordinate: destinationCoordinate)
         let destination = MKMapItem(placemark: destinationPlacemark)
-
+        
         let directionRequest = MKDirections.Request()
         directionRequest.source = source
         directionRequest.destination = destination
         directionRequest.transportType = .automobile
         directionRequest.requestsAlternateRoutes = true
-
+        
         let direction = MKDirections(request: directionRequest)
-
+        
         direction.calculate { response, error in
             guard error == nil else {
                 //log error
@@ -87,14 +93,14 @@ class MapViewController: UIViewController {
                 print(error?.localizedDescription as Any)
                 return
             }
-
+            
             guard let polyline: MKPolyline = response?.routes.first?.polyline else { return }
             self.mapView.addOverlay(polyline, level: .aboveLabels)
-
+            
             let rect = polyline.boundingMapRect
             let region = MKCoordinateRegion(rect)
             self.mapView.setRegion(region, animated: true)
-
+            
             //Odev 1 navigate buttonlari ile diger route'lar gosterilmelidir.
         }
     }
@@ -112,22 +118,23 @@ class MapViewController: UIViewController {
     }()
 }
 
+//MARK: - Extensions
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let coordinate = locations.first?.coordinate else { return }
         currentCoordinate = coordinate
         print("latitude: \(coordinate.latitude)")
         print("longitude: \(coordinate.longitude)")
-
+        
         mapView.setCenter(coordinate, animated: true)
     }
-
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkLocationPermission()
     }
-
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-
+        
     }
 }
 
