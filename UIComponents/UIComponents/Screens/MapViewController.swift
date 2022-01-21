@@ -84,7 +84,7 @@ class MapViewController: UIViewController {
             guard error == nil else {
                 //log error
                 //show error
-                print(error?.localizedDescription)
+                print(error?.localizedDescription as Any)
                 return
             }
 
