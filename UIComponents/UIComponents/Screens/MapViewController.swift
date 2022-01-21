@@ -122,7 +122,6 @@ class MapViewController: UIViewController {
             guard let route: MKRoute = response?.routes.first else { return }
             let polyline: MKPolyline = route.polyline
             self.routeCount = (response?.routes.count)!
-            // print("hasan: routcount: ", self.routeCount)
             // Configure previous and next buttons
             self.configurePreviousButtonStatus()
             self.configureNextButtonStatus()
@@ -133,7 +132,13 @@ class MapViewController: UIViewController {
                 // Case 0: for 'Draw route' button
                 // Remove older overlays if existing, and add new ones
                 self.mapView.removeOverlays(self.mapView.overlays)
-                self.mapView.addOverlay(polyline, level: .aboveLabels)
+                // Show all possible routes to the user in real time
+                for i in 0...(self.routeCount - 1) {
+                    guard let tempRoute: MKRoute = response?.routes[i] else { return }
+                    let tempPolyline: MKPolyline = tempRoute.polyline
+                    self.mapView.addOverlay(tempPolyline, level: .aboveLabels)
+                }
+                // Selected route is still the first one, so set routeIndex to 0
                 self.routeIndex = 0
                 // Configure previous and next buttons
                 self.configureNextButtonStatus()
