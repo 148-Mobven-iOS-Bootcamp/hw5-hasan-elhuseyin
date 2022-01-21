@@ -200,8 +200,8 @@ extension MapViewController: CLLocationManagerDelegate {
         // Get the new coordinates
         guard let coordinate = locations.first?.coordinate else { return }
         currentCoordinate = coordinate
-        print("latitude: \(coordinate.latitude)")
-        print("longitude: \(coordinate.longitude)")
+        // print("latitude: \(coordinate.latitude)")
+        // print("longitude: \(coordinate.longitude)")
         // Set the center of the screen to focus on the route
         mapView.setCenter(coordinate, animated: true)
     }
