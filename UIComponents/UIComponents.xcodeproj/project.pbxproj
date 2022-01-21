@@ -23,6 +23,8 @@
 		238A3331278AF6A80070B74E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238A3330278AF6A80070B74E /* MapViewController.swift */; };
 		2391F75127788C8300269D7F /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2391F75027788C8300269D7F /* UIColorExtensions.swift */; };
 		9F4FB05B279B104600AFA7FA /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FB05A279B104600AFA7FA /* Person.swift */; };
+		9F4FB05D279B466F00AFA7FA /* BannerSliderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FB05C279B466F00AFA7FA /* BannerSliderViewController.swift */; };
+		9F4FB05F279B4E6600AFA7FA /* BannerSliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F4FB05E279B4E6600AFA7FA /* BannerSliderCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		238FE2632792DA0D000D742C /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		2391F75027788C8300269D7F /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		9F4FB05A279B104600AFA7FA /* Person.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
+		9F4FB05C279B466F00AFA7FA /* BannerSliderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerSliderViewController.swift; sourceTree = "<group>"; };
+		9F4FB05E279B4E6600AFA7FA /* BannerSliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerSliderCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 			children = (
 				238A3320278986690070B74E /* MyCustomTableViewCell.swift */,
 				238A3321278986690070B74E /* MyCustomTableViewCell.xib */,
+				9F4FB05E279B4E6600AFA7FA /* BannerSliderCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -116,6 +121,7 @@
 			children = (
 				238A3316278970CE0070B74E /* StaticTableViewController.swift */,
 				238A3330278AF6A80070B74E /* MapViewController.swift */,
+				9F4FB05C279B466F00AFA7FA /* BannerSliderViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -226,6 +232,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				238A3317278970CE0070B74E /* StaticTableViewController.swift in Sources */,
+				9F4FB05D279B466F00AFA7FA /* BannerSliderViewController.swift in Sources */,
+				9F4FB05F279B4E6600AFA7FA /* BannerSliderCell.swift in Sources */,
 				238A3325278988260070B74E /* UITableViewExtensions.swift in Sources */,
 				238A331C278979550070B74E /* Constant.swift in Sources */,
 				23097EC7276F330D00AC8761 /* AppDelegate.swift in Sources */,
