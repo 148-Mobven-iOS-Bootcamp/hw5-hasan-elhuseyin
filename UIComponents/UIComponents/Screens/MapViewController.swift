@@ -122,7 +122,7 @@ class MapViewController: UIViewController {
             guard let route: MKRoute = response?.routes.first else { return }
             let polyline: MKPolyline = route.polyline
             self.routeCount = (response?.routes.count)!
-            print("hasan: routcount: ", self.routeCount)
+            // print("hasan: routcount: ", self.routeCount)
             // Configure previous and next buttons
             self.configurePreviousButtonStatus()
             self.configureNextButtonStatus()
@@ -150,7 +150,7 @@ class MapViewController: UIViewController {
                 guard let previousRoute: MKRoute = response?.routes[self.routeIndex] else { return }
                 let previousPolyline: MKPolyline = previousRoute.polyline
                 self.mapView.addOverlay(previousPolyline, level: .aboveLabels)
-                print("hasan: index: ", self.routeIndex)
+                print("hasan: route index: " + String(self.routeIndex + 1) + "/" + String(self.routeCount))
                 // Configure previous and next buttons
                 self.configurePreviousButtonStatus()
                 self.configureNextButtonStatus()
@@ -164,7 +164,7 @@ class MapViewController: UIViewController {
                 guard let nextRoute: MKRoute = response?.routes[self.routeIndex] else { return }
                 let nextPolyline: MKPolyline = nextRoute.polyline
                 self.mapView.addOverlay(nextPolyline, level: .aboveLabels)
-                print("hasan: index: ", self.routeIndex)
+                print("hasan: route index: " + String(self.routeIndex + 1) + "/" + String(self.routeCount))
                 // Configure previous and next buttons
                 self.configurePreviousButtonStatus()
                 self.configureNextButtonStatus()
