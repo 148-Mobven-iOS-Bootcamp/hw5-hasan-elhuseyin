@@ -37,9 +37,9 @@
                                         </button>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="gfu-TQ-QDy"/>
-                                    <barButtonItem style="plain" id="9sd-By-06G">
+                                    <barButtonItem title="draw route" style="plain" id="9sd-By-06G">
                                         <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="OVB-6K-5e7">
-                                            <rect key="frame" x="126.5" y="10" width="107.5" height="34.5"/>
+                                            <rect key="frame" x="109" y="10" width="107.5" height="34.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Button"/>
                                             <buttonConfiguration key="configuration" style="plain" title="Draw route"/>
@@ -48,17 +48,29 @@
                                             </connections>
                                         </button>
                                     </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="oO5-c0-o67"/>
-                                    <barButtonItem title="previous" image="chevron.backward" catalog="system" id="URq-No-qwf">
-                                        <connections>
-                                            <action selector="previousButtonTapped:" destination="m2C-yw-bgz" id="ogQ-rh-YD1"/>
-                                        </connections>
-                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="uq1-k3-Ut1"/>
-                                    <barButtonItem title="next" image="chevron.forward" catalog="system" id="bw8-k0-WVx">
-                                        <connections>
-                                            <action selector="nextButtonTapped:" destination="m2C-yw-bgz" id="SIb-qe-Pdz"/>
-                                        </connections>
+                                    <barButtonItem title="previous" style="plain" id="Gr5-w4-B1u">
+                                        <button key="customView" opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="bKP-UV-8Sh">
+                                            <rect key="frame" x="255" y="10" width="50" height="34.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" image="chevron.backward" catalog="system" title=""/>
+                                            <connections>
+                                                <action selector="drawRouteButtonTapped:" destination="m2C-yw-bgz" eventType="touchUpInside" id="Pai-XD-L3v"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="oO5-c0-o67"/>
+                                    <barButtonItem title="next" image="chevron.forward" catalog="system" style="plain" id="faj-Lg-3i1">
+                                        <button key="customView" opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="vop-LE-49V">
+                                            <rect key="frame" x="344" y="10" width="50" height="34.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" image="chevron.forward" catalog="system" title=""/>
+                                            <connections>
+                                                <action selector="drawRouteButtonTapped:" destination="m2C-yw-bgz" eventType="touchUpInside" id="GJ6-Ut-IPN"/>
+                                            </connections>
+                                        </button>
                                     </barButtonItem>
                                 </items>
                             </toolbar>
@@ -78,6 +90,8 @@
                     <navigationItem key="navigationItem" id="AAX-mw-rl1"/>
                     <connections>
                         <outlet property="mapView" destination="gwP-Ey-78A" id="UAs-b5-265"/>
+                        <outlet property="nextButton" destination="vop-LE-49V" id="Yc6-Pp-fke"/>
+                        <outlet property="previousButton" destination="Gr5-w4-B1u" id="e7M-cU-Md6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGL-gP-UiA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -10,8 +10,11 @@ import MapKit
 
 class MapViewController: UIViewController {
     
+    
     //MARK: - IBOutles
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var previousButton: UIBarButtonItem!
+    @IBOutlet weak var nextButton: UIButton!
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -19,11 +22,20 @@ class MapViewController: UIViewController {
         
         checkLocationPermission()
         addLongGestureRecognizer()
+        previousButton.isEnabled = false
+        nextButton.isEnabled = false
     }
     
     //MARK: - Variables
     private var currentCoordinate: CLLocationCoordinate2D?
     private var destinationCoordinate: CLLocationCoordinate2D?
+    private lazy var locationManager: CLLocationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        return locationManager
+    }()
+    private var routeIndex: Int  = 0
+    private var routeCount: Int = 0
     
     //MARK: - Functions
     func addLongGestureRecognizer() {
@@ -48,14 +60,22 @@ class MapViewController: UIViewController {
         case .authorizedAlways, .authorizedWhenInUse, .authorized:
             locationManager.requestLocation()
         case .denied, .restricted:
-            //popup gosterecegiz. go to settings butonuna basildiginda
-            //kullaniciyi uygulamamizin settings sayfasina gonder
             break
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         @unknown default:
             fatalError()
         }
+    }
+    
+    func configureNextButtonStatus() {
+        if self.routeIndex < self.routeCount - 1 { self.nextButton.isEnabled = true }
+        else { self.nextButton.isEnabled = false }
+    }
+    
+    func configurePreviousButtonStatus() {
+        if self.routeIndex > 0 { self.previousButton.isEnabled = true }
+        else { self.previousButton.isEnabled = false }
     }
     
     
@@ -66,11 +86,7 @@ class MapViewController: UIViewController {
     
     @IBAction func drawRouteButtonTapped(_ sender: UIButton) {
         guard let currentCoordinate = currentCoordinate,
-              let destinationCoordinate = destinationCoordinate else {
-                  // log
-                  // alert
-                  return
-              }
+              let destinationCoordinate = destinationCoordinate else { return }
         
         let sourcePlacemark = MKPlacemark(coordinate: currentCoordinate)
         let source = MKMapItem(placemark: sourcePlacemark)
@@ -88,34 +104,69 @@ class MapViewController: UIViewController {
         
         direction.calculate { response, error in
             guard error == nil else {
-                //log error
-                //show error
                 print(error?.localizedDescription as Any)
                 return
             }
             
-            guard let polyline: MKPolyline = response?.routes.first?.polyline else { return }
-            self.mapView.addOverlay(polyline, level: .aboveLabels)
+            guard let route: MKRoute = response?.routes.first else { return }
+            let polyline: MKPolyline = route.polyline
+            self.routeCount = (response?.routes.count)!
+            print("hasan: routcount: ", self.routeCount)
             
-            let rect = polyline.boundingMapRect
-            let region = MKCoordinateRegion(rect)
-            self.mapView.setRegion(region, animated: true)
+            self.configurePreviousButtonStatus()
+            self.configureNextButtonStatus()
             
-            //Odev 1 navigate buttonlari ile diger route'lar gosterilmelidir.
+            switch sender.tag {
+            case 0:
+                self.mapView.removeOverlays(self.mapView.overlays)
+                self.mapView.addOverlay(polyline, level: .aboveLabels)
+                self.routeIndex = 0
+                
+                self.configureNextButtonStatus()
+                self.configurePreviousButtonStatus()
+                
+                configureRegion()
+                
+            case 1:
+                print("hasan: previous")
+                self.mapView.removeOverlays(self.mapView.overlays)
+                self.routeIndex -= 1
+                guard let previousRoute: MKRoute = response?.routes[self.routeIndex] else { return }
+                let previousPolyline: MKPolyline = previousRoute.polyline
+                self.mapView.addOverlay(previousPolyline, level: .aboveLabels)
+                print("hasan: index: ", self.routeIndex)
+                
+                self.configurePreviousButtonStatus()
+                self.configureNextButtonStatus()
+                
+            case 2:
+                print("hasan: next")
+                self.mapView.removeOverlays(self.mapView.overlays)
+                self.routeIndex += 1
+                guard let nextRoute: MKRoute = response?.routes[self.routeIndex] else { return }
+                let nextPolyline: MKPolyline = nextRoute.polyline
+                self.mapView.addOverlay(nextPolyline, level: .aboveLabels)
+                print("hasan: index: ", self.routeIndex)
+                print()
+                
+                self.configurePreviousButtonStatus()
+                self.configureNextButtonStatus()
+                
+            default:
+                print("error occurred")
+            }
+            
+            func configureRegion() {
+                let rect = polyline.boundingMapRect
+                let region = MKCoordinateRegion(rect)
+                self.mapView.setRegion(region, animated: true)
+            }
+            
         }
+        
     }
     
-    @IBAction func previousButtonTapped(_ sender: Any) {
-    }
     
-    @IBAction func nextButtonTapped(_ sender: Any) {
-    }
-    
-    private lazy var locationManager: CLLocationManager = {
-        let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        return locationManager
-    }()
 }
 
 //MARK: - Extensions
@@ -134,7 +185,7 @@ extension MapViewController: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        
+        return
     }
 }
 
