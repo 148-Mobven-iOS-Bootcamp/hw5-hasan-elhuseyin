@@ -98,7 +98,13 @@ class MapViewController: UIViewController {
             //Odev 1 navigate buttonlari ile diger route'lar gosterilmelidir.
         }
     }
-
+    
+    @IBAction func previousButtonTapped(_ sender: Any) {
+    }
+    
+    @IBAction func nextButtonTapped(_ sender: Any) {
+    }
+    
     private lazy var locationManager: CLLocationManager = {
         let locationManager = CLLocationManager()
         locationManager.delegate = self
