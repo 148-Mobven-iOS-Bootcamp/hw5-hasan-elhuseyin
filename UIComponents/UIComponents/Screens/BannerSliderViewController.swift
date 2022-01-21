@@ -58,6 +58,18 @@ class BannerSliderViewController: UIViewController {
 //MARK: - Extensions
 
 extension BannerSliderViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    // This function will be used to achieve the 'Infinite Scroll' Effect
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // Print scrollView contentOffset
+        print(scrollView.contentOffset)
+        // Calculate maxOffset of the scrollView
+        let maxOffset = scrollView.contentSize.width - scrollView.frame.size.width
+        // When the scrollView's offset reachs its maximum, reset the offset to 0
+        if scrollView.contentOffset.x > maxOffset {
+            scrollView.contentOffset = CGPoint(x: 0, y: scrollView.contentOffset.y)
+        }
+    }
+     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // Return the number of cells
         return arrOfLabels.count
